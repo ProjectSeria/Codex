@@ -117,6 +117,12 @@
             <version>6.0.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.momirealms</groupId>
+            <artifactId>CustomFishing</artifactId>
+            <version>2.3.26</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

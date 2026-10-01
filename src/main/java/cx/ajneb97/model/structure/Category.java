@@ -76,7 +76,7 @@ public class Category {
 
     public Discovery getDiscovery(String id){
         for(Discovery d : discoveries){
-            if(d.getId().equals(id)){
+            if(d.getId().equalsIgnoreCase(id)){
                 return d;
             }
         }

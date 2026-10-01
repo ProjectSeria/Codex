@@ -7,6 +7,7 @@ import cx.ajneb97.config.ConfigsManager;
 import cx.ajneb97.database.MySQLConnection;
 import cx.ajneb97.listeners.InventoryListener;
 import cx.ajneb97.listeners.PlayerListener;
+import cx.ajneb97.listeners.dependencies.CustomFishingListener;
 import cx.ajneb97.listeners.dependencies.EliteMobsListener;
 import cx.ajneb97.listeners.dependencies.MythicMobsListener;
 import cx.ajneb97.listeners.dependencies.ResidenceListener;
@@ -116,6 +117,10 @@ public class Codex extends JavaPlugin {
 
         if(dependencyManager.isResidence()){
             pm.registerEvents(new ResidenceListener(this), this);
+        }
+
+        if(dependencyManager.isCustomFishing()){
+            pm.registerEvents(new CustomFishingListener(this), this);
         }
 
     }

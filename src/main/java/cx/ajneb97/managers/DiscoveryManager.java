@@ -85,6 +85,32 @@ public class DiscoveryManager {
         onPluginMobKill(player,eliteMobType.replace(".yml",""),discoveries);
     }
 
+    public void onCustomFishingCatch(Player player, String lootId){
+        ArrayList<Discovery> discoveries = getPossibleDiscoveries(DiscoveredOn.DiscoveredOnType.CUSTOM_FISHING);
+        for(Discovery discovery : discoveries){
+            DiscoveredOn discoveredOn = discovery.getDiscoveredOn();
+            String discoveryFishType = discoveredOn.getFishType();
+            if(discoveryFishType != null){
+                String[] sep = discoveryFishType.split(";");
+                if(Arrays.stream(sep).noneMatch(lootId::equalsIgnoreCase)){
+                    continue;
+                }
+            }
+
+            onDiscover(player,discovery.getCategoryName(),discovery.getId());
+            return;
+        }
+
+        // Auto-match discovery by loot ID if no explicit discovered_on is set
+        for(Category category : plugin.getCategoryManager().getCategories()){
+            Discovery discovery = category.getDiscovery(lootId);
+            if(discovery != null && (discovery.getDiscoveredOn() == null || discovery.getDiscoveredOn().getType() == DiscoveredOn.DiscoveredOnType.CUSTOM_FISHING)){
+                onDiscover(player, category.getName(), discovery.getId());
+                return;
+            }
+        }
+    }
+
     private void onPluginMobKill(Player player, String mobType, ArrayList<Discovery> discoveries){
         for(Discovery discovery : discoveries){
             DiscoveredOn discoveredOn = discovery.getDiscoveredOn();

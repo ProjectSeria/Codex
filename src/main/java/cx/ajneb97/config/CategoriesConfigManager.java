@@ -48,13 +48,27 @@ public class CategoriesConfigManager extends DataFolderConfigManager {
 
                     DiscoveredOn discoveredOn = null;
                     if(config.contains("discoveries."+key+".discovered_on")){
-                        discoveredOn = new DiscoveredOn(
-                                DiscoveredOn.DiscoveredOnType.valueOf(config.getString("discoveries."+key+".discovered_on.type"))
-                        );
-                        String pathValue = "discoveries."+key+".discovered_on.value";
-                        discoveredOn.setMobName(config.getString(pathValue+".mob_name"));
-                        discoveredOn.setMobType(config.getString(pathValue+".mob_type"));
-                        discoveredOn.setRegionName(config.getString(pathValue+".region_name"));
+                        String rawType = config.getString("discoveries."+key+".discovered_on.type");
+                        if(rawType != null){
+                            rawType = rawType.toUpperCase().replace("-", "_");
+                            if(rawType.equals("CUSTOMFISHING")){
+                                rawType = "CUSTOM_FISHING";
+                            }
+                            try {
+                                discoveredOn = new DiscoveredOn(
+                                        DiscoveredOn.DiscoveredOnType.valueOf(rawType)
+                                );
+                            } catch (IllegalArgumentException e) {
+                                plugin.getLogger().warning("Unknown discovered_on type: " + rawType + " in discovery " + key);
+                            }
+                        }
+                        if(discoveredOn != null){
+                            String pathValue = "discoveries."+key+".discovered_on.value";
+                            discoveredOn.setMobName(config.getString(pathValue+".mob_name"));
+                            discoveredOn.setMobType(config.getString(pathValue+".mob_type"));
+                            discoveredOn.setRegionName(config.getString(pathValue+".region_name"));
+                            discoveredOn.setFishType(config.getString(pathValue+".fish_type"));
+                        }
                     }
 
                     CommonItem customDiscoveryItemUnlocked = null;

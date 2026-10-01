@@ -13,6 +13,7 @@ public class DependencyManager {
     private boolean isMythicMobs;
     private boolean isEliteMobs;
     private boolean isResidence;
+    private boolean isCustomFishing;
     private WorldGuardManager worldGuardManager;
 
     public DependencyManager(Codex plugin){
@@ -32,6 +33,9 @@ public class DependencyManager {
         }
         if(Bukkit.getServer().getPluginManager().getPlugin("Residence") != null){
             isResidence = true;
+        }
+        if(Bukkit.getServer().getPluginManager().getPlugin("CustomFishing") != null){
+            isCustomFishing = true;
         }
         try{
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
@@ -63,5 +67,9 @@ public class DependencyManager {
 
     public boolean isResidence() {
         return isResidence;
+    }
+
+    public boolean isCustomFishing() {
+        return isCustomFishing;
     }
 }

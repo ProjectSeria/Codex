@@ -6,6 +6,7 @@ public class DiscoveredOn {
     private String mobType;
     private String mobName;
     private String regionName;
+    private String fishType;
 
     public DiscoveredOn(DiscoveredOnType type) {
         this.type = type;
@@ -43,11 +44,20 @@ public class DiscoveredOn {
         this.regionName = regionName;
     }
 
+    public String getFishType() {
+        return fishType;
+    }
+
+    public void setFishType(String fishType) {
+        this.fishType = fishType;
+    }
+
     public enum DiscoveredOnType{
         MOB_KILL,
         MYTHIC_MOB_KILL,
         ELITE_MOB_KILL,
         WORLDGUARD_REGION,
-        RESIDENCE_REGION
+        RESIDENCE_REGION,
+        CUSTOM_FISHING
     }
 }
